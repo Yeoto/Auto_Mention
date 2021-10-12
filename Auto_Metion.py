@@ -49,7 +49,7 @@ def SpreadName2KakaoName(spread_name):
     elif spread_name == "약좀":
         return (__kor2eng.kor2eng("약한좀비"), "kr")
 
-    return (__kor2eng.kor2eng("오류!"), "kr")
+    return (__kor2eng.kor2eng("오류"), "kr")
 
 def press(string, lang="kr"):
     if PRESS_DEBUG == True:
@@ -83,10 +83,13 @@ def mention(string, lang):
     if lang == "en":
         pag.hotkey('hanguel')
 
-    temp_string = "@" + string
-    pag.write(temp_string)
-    pag.press("enter")
-
+    if string != __kor2eng.kor2eng("오류"):
+        temp_string = "@" + string
+        pag.write(temp_string)
+        pag.press("enter")
+    else:
+        pag.write(string + " ")
+        
     if lang == "en":
         pag.hotkey('hanguel')
 

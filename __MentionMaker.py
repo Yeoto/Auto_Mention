@@ -1,7 +1,7 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-TABLEDATA_DEBUG = True
+TABLEDATA_DEBUG = False
 
 def GetWeekdayPriorityByWeekday(Weekday):
     if Weekday == "수":
