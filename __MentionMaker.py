@@ -1,4 +1,5 @@
 import gspread
+import time
 from oauth2client.service_account import ServiceAccountCredentials
 
 TABLEDATA_DEBUG = False
@@ -66,6 +67,10 @@ class MentionMaker:
             range_list = worksheet.range("A3:A3")
         else:
             range_list = worksheet.range("A3:A50")
+
+        #뭔가.. 가져오는데 버그가 있는듯..;; 일단 한번 
+        row_cells = worksheet.row_values(1)
+        time.sleep(1)
 
         for cell in range_list:
             if cell.value != 'O':

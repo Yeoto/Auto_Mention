@@ -4,10 +4,11 @@ import pygetwindow as gw
 import __MentionMaker
 import time
 import __kor2eng
+import sys
 
 PRESS_DEBUG = False
-MENTION_DEBUG = True
-KATALK_DEBUG = True
+MENTION_DEBUG = False
+KATALK_DEBUG = False
 
 def SpreadName2KakaoName(spread_name):
     if spread_name == "예토":
@@ -95,6 +96,16 @@ def mention(string, lang):
 
 
 if __name__ == "__main__":
+    for rgv in sys.argv:
+        if rgv == "/MENTION_DEBUG":
+            MENTION_DEBUG = True
+        if rgv == "/KATALK_DEBUG":
+            KATALK_DEBUG = True
+        if rgv == "/PRESS_DEBUG":
+            PRESS_DEBUG = True
+        if rgv == "/TABLE_DEBUG":
+            __MentionMaker.TABLEDATA_DEBUG = True
+
     katalk_title = ""
     if KATALK_DEBUG == True:
         katalk_title = "박유진"
