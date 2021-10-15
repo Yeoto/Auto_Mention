@@ -5,10 +5,12 @@ import __MentionMaker
 import time
 import __kor2eng
 import sys
+import datetime
 
 PRESS_DEBUG = False
 MENTION_DEBUG = False
 KATALK_DEBUG = False
+EXPORT_TODAY = False
 
 def SpreadName2KakaoName(spread_name):
     if spread_name == "예토":
@@ -44,7 +46,7 @@ def SpreadName2KakaoName(spread_name):
     elif spread_name == "외않되":
         return (__kor2eng.kor2eng("기술슼인생낭비"), "kr")
     elif spread_name == "푸스":
-        return ("푸스로다", "en")
+        return ("Velhakana", "en")
     elif spread_name == "사다":
         return (__kor2eng.kor2eng("사다하루"), "kr")
     elif spread_name == "약좀":
@@ -87,6 +89,7 @@ def mention(string, lang):
     if string != __kor2eng.kor2eng("오류"):
         temp_string = "@" + string
         pag.write(temp_string)
+        time.sleep(0.2)
         pag.press("enter")
     else:
         pag.write(string + " ")
@@ -105,6 +108,8 @@ if __name__ == "__main__":
             PRESS_DEBUG = True
         if rgv == "/TABLE_DEBUG":
             __MentionMaker.TABLEDATA_DEBUG = True
+        if rgv == "/EXPORT_TODAY":
+            EXPORT_TODAY = True
 
     katalk_title = ""
     if KATALK_DEBUG == True:
@@ -137,11 +142,24 @@ if __name__ == "__main__":
     time.sleep(1)
     print("카카오톡 자동 입력 진행 중...", end=" ")
 
+    str_pre = ""
+    for_range = []
+    if EXPORT_TODAY == True:
+        Weekday_int = datetime.datetime.today().weekday()
+        Weekday_int -= 2
+        if Weekday_int < 0:
+            Weekday_int += 7
+        for_range = range(Weekday_int,Weekday_int+1)
+        str_pre = "오늘의 일정 보내드립니다."
+    else:
+        for_range = range(0,7)
+        str_pre = "이번주 일정 보내드립니다."
+
     win.activate()
-    press(__kor2eng.kor2eng("본 멘션은 자동화 프로그램을 통해 보내지는 알림입니다."))
+    press(__kor2eng.kor2eng(str_pre))
     press("enter")
 
-    for i in range(0,6):
+    for i in for_range:
         if i not in TableData:
             continue
 
@@ -167,6 +185,10 @@ if __name__ == "__main__":
             for Player in Party:
                 kakao_nickname = SpreadName2KakaoName(Player)
                 mention(kakao_nickname[0], kakao_nickname[1])
+                time.sleep(0.3)
+
+            if (8-len(Party)) % 4 != 0:
+                press(__kor2eng.kor2eng("+ 공석 {0}".format((8-len(Party)) % 4)))
 
             if i == size - 1:
                 press("enter")
@@ -186,4 +208,3 @@ if __name__ == "__main__":
     press("enter")
 
     print("완료 !")
-    #pag.press("enter")

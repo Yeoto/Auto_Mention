@@ -68,9 +68,9 @@ class MentionMaker:
         else:
             range_list = worksheet.range("A3:A50")
 
-        #뭔가.. 가져오는데 버그가 있는듯..;; 일단 한번 
+        #뭔가.. 가져오는데 버그가 있는듯..;; 일단 한번 읽고 10초 대기시켜서 로딩되도록 함
         row_cells = worksheet.row_values(1)
-        time.sleep(1)
+        time.sleep(10)
 
         for cell in range_list:
             if cell.value != 'O':
@@ -99,10 +99,17 @@ class MentionMaker:
                 self.TableData[Weekday] = []
 
             self.TableData[Weekday].append((Contents_Time, Party))
+
+        for i in range(0,7):
+            if i not in self.TableData:
+                continue
+            
+            self.TableData[i].sort(key = lambda x: int(x[0][-5:].replace(":","").replace("++","01")))
+
         return
 
     def PrintTableData(self):
-        for i in range(0,6):
+        for i in range(0,7):
             if i not in self.TableData:
                 continue
 
