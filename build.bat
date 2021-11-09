@@ -1,1 +1,1 @@
-"C:\Users\박유진\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\Scripts\pyinstaller.exe" --onefile Auto_Metion.py
+"C:\Users\박유진\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\Scripts\pyinstaller.exe" --onefile Auto_Mention.py
