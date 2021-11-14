@@ -118,11 +118,12 @@ if __name__ == "__main__":
         katalk_title = "팀노블 스케줄"
 
     alert_str = """1. \"{0}\" 카톡방을 열어두세요.
-2. 카톡방 대화 입력 칸 클릭 후, 한글로 써지는걸 확인하고 OK 누르세요.
+2. 카톡방 대화 입력 칸 클릭 후, 한글로 써지는걸 확인하고 "확인"을 누르세요.
 확인 안하면 한/영 반대로 나오게 됩니다.
 3. 출력 중 다른 행동을 하지 말아주세요. 중간에 나오다 끊길 수 있습니다.
 """.format(katalk_title)
-    pag.alert(alert_str)
+    if pag.confirm(alert_str) != "OK":
+        quit()
 
     win_list = gw.getWindowsWithTitle(katalk_title)
     if len(win_list) == 0:
