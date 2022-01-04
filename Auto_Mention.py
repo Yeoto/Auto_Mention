@@ -30,7 +30,7 @@ def SpreadName2KakaoName(spread_name):
     elif spread_name == "라비에몽":
         return ("Lavienus", "en")
     elif spread_name == "상어":
-        return (__kor2eng.kor2eng("홀리가된상어/카마인/도우미"), "kr")
+        return (__kor2eng.kor2eng("상어"), "kr")
     elif spread_name == "빡상":
         return (__kor2eng.kor2eng("카마인섭이고픈박쌍혁"), "kr")
     elif spread_name == "구뱅":
