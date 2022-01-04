@@ -51,7 +51,11 @@ def SpreadName2KakaoName(spread_name):
         return (__kor2eng.kor2eng("사다하루"), "kr")
     elif spread_name == "약좀":
         return (__kor2eng.kor2eng("약한좀비"), "kr")
-
+    elif spread_name == "현지":
+        return (__kor2eng.kor2eng("우주미누"), "kr")
+    elif spread_name == "온세상":
+        return (__kor2eng.kor2eng("온세상"), "kr")
+        
     return (__kor2eng.kor2eng("오류"), "kr")
 
 def press(string, lang="kr"):
