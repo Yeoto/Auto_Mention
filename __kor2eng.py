@@ -45,8 +45,29 @@ def split(kor):
         return None
     return CHO_LIST[code // CHO_CODE], JUNG_LIST[(code % CHO_CODE) // JUNG_CODE], JONG_LIST[(code % CHO_CODE) % JUNG_CODE]
 
+def SplitByKorEng(str):
+    list = []
 
+    lang = ""
+    prev_lang = ""
+    str_temp = ""
+    for c in str:
+        prev_lang = lang
+        if ord('가') <= ord(c) <= ord("힇"):
+            lang = "kr"
+        elif ord('a') <= ord(c) <= ord("z") or ord('A') <= ord(c) <= ord("Z"):
+            lang = "en"
+
+        if prev_lang != "" and prev_lang != lang:
+            list.append((str_temp, prev_lang))
+            str_temp = ""
+
+        str_temp += c
+
+    list.append((str_temp, lang))
+    return list
+    
 if __name__ == '__main__':
-    print(split('뷁'))
-    print(combine(*split('뷁')))
-    print(kor2eng('발탄노말'))
+    str = "Velhakana"
+    print(str)
+    print(*SplitByKorEng(str), sep="\n")

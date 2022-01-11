@@ -6,6 +6,7 @@ import time
 import __kor2eng
 import sys
 import datetime
+from functools import reduce
 
 PRESS_DEBUG = False
 MENTION_DEBUG = False
@@ -14,49 +15,51 @@ EXPORT_TODAY = False
 
 def SpreadName2KakaoName(spread_name):
     if spread_name == "예토":
-        return (__kor2eng.kor2eng("예토"), "kr")
+        return "예토"
     elif spread_name == "벸":
-        return (__kor2eng.kor2eng("벸"), "kr")
+        return "벸"
     elif spread_name == "아이티":
-        return ("EyeT", "en")
+        return "EyeT입니다EyeT!!입니다!!"
     elif spread_name == "푸바":
-        return (__kor2eng.kor2eng("푸른바람"), "kr")
+        return "푸른바람"
     elif spread_name == "꿈방":
-        return (__kor2eng.kor2eng("꿈방"), "kr")
+        return "꿈방"
     elif spread_name == "아카":
-        return (__kor2eng.kor2eng("웨총탕총탕"), "kr")
+        return "웨총탕총탕"
     elif spread_name == "Art":
-        return ("Art", "en")
+        return "Art"
     elif spread_name == "라비에몽":
-        return ("Lavienus", "en")
+        return "Lavienus"
     elif spread_name == "상어":
-        return (__kor2eng.kor2eng("상어"), "kr")
+        return "상어is상어"
     elif spread_name == "빡상":
-        return (__kor2eng.kor2eng("카마인섭이고픈박쌍혁"), "kr")
+        return "카마인섭이고픈박쌍혁"
     elif spread_name == "구뱅":
-        return (__kor2eng.kor2eng("틀서커(진) 구뱅"), "kr")
+        return "틀서커(진) 구뱅"
     elif spread_name == "말랑":
-        return (__kor2eng.kor2eng("말랑카우블랙"), "kr")
+        return "말랑카우블랙"
     elif spread_name == "분니":
-        return (__kor2eng.kor2eng("분니수거"), "kr")
+        return "분니수거"
     elif spread_name == "사슴":
-        return (__kor2eng.kor2eng("산속숲속숫사슴"), "kr")
+        return "산속숲속숫사슴"
     elif spread_name == "정별":
-        return (__kor2eng.kor2eng("정별"), "kr")
+        return "정별"
     elif spread_name == "외않되":
-        return (__kor2eng.kor2eng("기술슼인생낭비"), "kr")
+        return "기술슼인생낭비"
     elif spread_name == "푸스":
-        return ("Velhakana", "en")
+        return "Velhakana"
     elif spread_name == "사다":
-        return (__kor2eng.kor2eng("사다하루"), "kr")
+        return "사다하루"
     elif spread_name == "약좀":
-        return (__kor2eng.kor2eng("약한좀비"), "kr")
+        return "약한좀비"
     elif spread_name == "현지":
-        return (__kor2eng.kor2eng("우주미누"), "kr")
+        return "우주미누"
     elif spread_name == "온세상":
-        return (__kor2eng.kor2eng("온세상"), "kr")
+        return "온세상"
+    elif spread_name == "수상":
+        return "예비역 수상한 뱁새"
         
-    return (__kor2eng.kor2eng("오류"), "kr")
+    return "오류"
 
 def press(string, lang="kr"):
     if PRESS_DEBUG == True:
@@ -73,33 +76,38 @@ def press(string, lang="kr"):
     if lang == "en":
         pag.hotkey('hanguel')
 
-    pag.write(string)
+    pag.write(__kor2eng.kor2eng(string))
 
     if lang == "en":
         pag.hotkey('hanguel')
 
-def mention(string, lang):
+def mention(splited_str):
     if PRESS_DEBUG == True:
-        print(string)
+        print(reduce(lambda x: x[0], splited_str))
         return 
 
-    if MENTION_DEBUG == True:
-        press("@" + string + " ", lang)
-        return
+    if len(splited_str) == 1 and splited_str[0][0] == "오류":
+        pag.write(splited_str[0][0] + " ")
 
-    if lang == "en":
-        pag.hotkey('hanguel')
+    pag.write("@")
+    time.sleep(0.2)
+    for splited in splited_str:
+        string, lang = splited
 
-    if string != __kor2eng.kor2eng("오류"):
-        temp_string = "@" + string
-        pag.write(temp_string)
-        time.sleep(0.2)
+        if lang == "en":
+            pag.hotkey('hanguel')
+
+        pag.write(__kor2eng.kor2eng(string))
+            
+        if lang == "en":
+            pag.hotkey('hanguel')
+
+    time.sleep(0.2)
+
+    if MENTION_DEBUG == False:
         pag.press("enter")
     else:
-        pag.write(string + " ")
-        
-    if lang == "en":
-        pag.hotkey('hanguel')
+        pag.press(" ")
 
 
 if __name__ == "__main__":
@@ -161,7 +169,7 @@ if __name__ == "__main__":
         str_pre = "이번주 일정 보내드립니다."
 
     win.activate()
-    press(__kor2eng.kor2eng(str_pre))
+    press(str_pre)
     press("enter")
 
     for i in for_range:
@@ -184,16 +192,16 @@ if __name__ == "__main__":
 
             player_counter += len(Party)
             
-            press(__kor2eng.kor2eng(Time))
+            press(Time)
             press("sh_enter")
             
             for Player in Party:
                 kakao_nickname = SpreadName2KakaoName(Player)
-                mention(kakao_nickname[0], kakao_nickname[1])
+                mention(__kor2eng.SplitByKorEng(kakao_nickname))
                 time.sleep(0.3)
 
             if (8-len(Party)) % 4 != 0:
-                press(__kor2eng.kor2eng("+ 공석 {0}".format((8-len(Party)) % 4)))
+                press(("+ 공석 {0}".format((8-len(Party)) % 4)))
 
             if i == size - 1:
                 press("enter")
@@ -209,7 +217,7 @@ if __name__ == "__main__":
                     press("sh_enter")
             
     press("enter")
-    press(__kor2eng.kor2eng("이상입니다. 감사합니다."))
+    press("이상입니다. 감사합니다.")
     press("enter")
 
     print("완료 !")
