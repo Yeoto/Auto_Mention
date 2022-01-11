@@ -56,6 +56,8 @@ def SpreadName2KakaoName(spread_name):
         return "우주미누"
     elif spread_name == "온세상":
         return "온세상"
+    elif spread_name == "수상":
+        return "예비역 수상한 뱁새"
         
     return "오류"
 
