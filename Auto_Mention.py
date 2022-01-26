@@ -33,7 +33,7 @@ def SpreadName2KakaoName(spread_name):
     elif spread_name == "상어":
         return "상어는상어"
     elif spread_name == "빡상":
-        return "카마인섭이고픈박쌍혁"
+        return "카마인이된 박쌍혁"
     elif spread_name == "구뱅":
         return "틀서커(진) 구뱅"
     elif spread_name == "말랑":
