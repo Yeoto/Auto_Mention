@@ -41,6 +41,11 @@ def GetWeekdayByPriority(Priority):
     return ""
 
 class MentionMaker:
+    #TableData = { 월 : [(컨텐츠+시간, [player1, ..., player8])],  
+    #              화 : ..., }
+    TableData = {}
+    KaTalk_Dict = {}
+
     def __init__(self):
         self.LoadParsingData()
         return
@@ -106,6 +111,11 @@ class MentionMaker:
             
             self.TableData[i].sort(key = lambda x: int(x[0][-5:].replace(":","").replace("++","01")))
 
+        worksheet = doc.worksheet('원정대 시트')
+        datas_katalk = worksheet.row_values(1)
+        datas_basenick = worksheet.row_values(2)
+        
+        self.KaTalk_Dict = dict(zip(datas_basenick, datas_katalk))
         return
 
     def PrintTableData(self):
@@ -128,10 +138,8 @@ class MentionMaker:
         return
         
     def GetTableData(self):
-        return self.TableData
-    #TableData = { 월 : [(컨텐츠+시간, [player1, ..., player8])],  
-    #              화 : ..., }
-    TableData = {}
+        return self.TableData, self.KaTalk_Dict
+   
 
 if __name__ == "__main__":
     TableMaker = MentionMaker()

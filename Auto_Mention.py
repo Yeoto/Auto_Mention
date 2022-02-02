@@ -13,54 +13,6 @@ MENTION_DEBUG = False
 KATALK_DEBUG = False
 EXPORT_TODAY = False
 
-def SpreadName2KakaoName(spread_name):
-    if spread_name == "예토":
-        return "예토"
-    elif spread_name == "벸":
-        return "벸"
-    elif spread_name == "아이티":
-        return "EyeT"
-    elif spread_name == "푸바":
-        return "푸른바람"
-    elif spread_name == "꿈방":
-        return "꿈방"
-    elif spread_name == "아카":
-        return "웨총탕총탕"
-    elif spread_name == "Art":
-        return "Art"
-    elif spread_name == "라비에몽":
-        return "Lavienus"
-    elif spread_name == "상어":
-        return "상어는상어"
-    elif spread_name == "빡상":
-        return "카마인이된 박쌍혁"
-    elif spread_name == "구뱅":
-        return "틀서커(진) 구뱅"
-    elif spread_name == "말랑":
-        return "말랑카우블랙"
-    elif spread_name == "분니":
-        return "분니수거"
-    elif spread_name == "사슴":
-        return "산속숲속숫사슴"
-    elif spread_name == "정별":
-        return "정별"
-    elif spread_name == "외않되":
-        return "기술슼인생낭비"
-    elif spread_name == "푸스":
-        return "Velhakana"
-    elif spread_name == "사다":
-        return "사다하루"
-    elif spread_name == "약좀":
-        return "약한좀비"
-    elif spread_name == "현지":
-        return "우주미누"
-    elif spread_name == "온세상":
-        return "온세상"
-    elif spread_name == "수상":
-        return "예비역 수상한 뱁새"
-        
-    return "오류"
-
 def press(string, lang="kr"):
     if PRESS_DEBUG == True:
         print(string)
@@ -149,7 +101,7 @@ if __name__ == "__main__":
 
     print("로프레드시트 테이블 데이터 파싱 중...", end=" ")
     TableMaker = __MentionMaker.MentionMaker()
-    TableData = TableMaker.GetTableData()
+    TableData, KaTalk_Dict = TableMaker.GetTableData()
     print("완료 !")
     
     time.sleep(1)
@@ -196,7 +148,9 @@ if __name__ == "__main__":
             press("sh_enter")
             
             for Player in Party:
-                kakao_nickname = SpreadName2KakaoName(Player)
+                kakao_nickname = '오류'
+                if Player in KaTalk_Dict and KaTalk_Dict[Player] != '':
+                    kakao_nickname = KaTalk_Dict[Player]
                 mention(__kor2eng.SplitByKorEng(kakao_nickname))
                 time.sleep(0.3)
 
