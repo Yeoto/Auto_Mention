@@ -87,7 +87,7 @@ class MentionMaker:
                 continue
 
             Weekday = GetWeekdayPriorityByWeekday(row_cells[3][0:1])
-            Contents = row_cells[1]
+            Contents = row_cells[2]
 
             Contents = Contents.replace("N", " 노말")
             Contents = Contents.replace("H", " 하드")
