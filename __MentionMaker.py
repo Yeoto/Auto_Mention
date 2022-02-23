@@ -69,9 +69,9 @@ class MentionMaker:
         range_list = []
 
         if TABLEDATA_DEBUG == True:
-            range_list = worksheet.range("A3:A3")
+            range_list = worksheet.range("B3:B3")
         else:
-            range_list = worksheet.range("A3:A60")
+            range_list = worksheet.range("B3:B60")
 
         #뭔가.. 가져오는데 버그가 있는듯..;; 일단 한번 읽고 10초 대기시켜서 로딩되도록 함
         row_cells = worksheet.row_values(1)
@@ -86,15 +86,15 @@ class MentionMaker:
             if len(row_cells) < 20:
                 continue
 
-            Weekday = GetWeekdayPriorityByWeekday(row_cells[2][0:1])
+            Weekday = GetWeekdayPriorityByWeekday(row_cells[3][0:1])
             Contents = row_cells[1]
 
             Contents = Contents.replace("N", " 노말")
             Contents = Contents.replace("H", " 하드")
 
-            Contents_Time = Contents + " " + row_cells[2][2:]
+            Contents_Time = Contents + " " + row_cells[3][2:]
             Party = []
-            for i in range(20, 28):
+            for i in range(21, 29):
                 if i >= len(row_cells):
                     break
                 if row_cells[i] != "":
