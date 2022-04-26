@@ -71,7 +71,7 @@ class MentionMaker:
         if TABLEDATA_DEBUG == True:
             range_list = worksheet.range("B3:B3")
         else:
-            range_list = worksheet.range("B3:B60")
+            range_list = worksheet.range("B3:B70")
 
         #뭔가.. 가져오는데 버그가 있는듯..;; 일단 한번 읽고 10초 대기시켜서 로딩되도록 함
         row_cells = worksheet.row_values(1)
